@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Meghana!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(180deg, #ffe6f0, #ff99cc);
+    }
+    #startButton {
+      padding: 20px 40px;
+      font-size: 28px;
+      font-family: 'Dancing Script', cursive;
+      color: #fff;
+      background: #ff69b4;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+    #startButton:hover {
+      transform: scale(1.1);
+    }
+    #birthdayMessage {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 48px;
+      font-family: 'Dancing Script', cursive;
+      color: #fff;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 1.5s ease-out forwards;
+      z-index: 10;
+    }
+    .pink-bg {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffccff;
+      z-index: 1;
+      animation: fadeIn 1s ease-in;
+    }
+    .balloon {
+      position: absolute;
+      width: 60px;
+      height: 80px;
+      background: radial-gradient(circle at 50% 30%, #ff5555, #ff0000);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      animation: float 6s ease-in-out infinite;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 20px;
+      background: #333;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-100vh); }
+    }
+    @keyframes zoomIn {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .fireworks {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <button id="startButton">Click Here</button>
+  <div class="pink-bg" id="pinkBackground"></div>
+  <div id="birthdayMessage">Happy Birthday Meghana! 🎉</div>
+  <canvas class="fireworks" id="fireworksCanvas"></canvas>
+  <audio id="birthdayTune" src="happy-birthday.mp3"></audio>
+
+  
+
+
+
+  <script>
+    const button = document.getElementById('startButton');
+    const message = document.getElementById('birthdayMessage');
+    const pinkBg = document.getElementById('pinkBackground');
+    const tune = document.getElementById('birthdayTune');
+    const canvas = document.getElementById('fireworksCanvas');
+
+    button.addEventListener('click', () => {
+      button.style.display = 'none';
+      pinkBg.style.display = 'block';
+      message.style.display = 'block';
+      tune.play();
+
+      // Fireworks animation
+      canvas.style.display = 'block';
+      const confetti = window.confetti;
+      const duration = 15 * 1000;
+      const animationEnd = Date.now() + duration;
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        confetti({
+          particleCount: 100,
+          angle: randomInRange(55, 125),
+          spread: randomInRange(50, 70),
+          origin: { x: Math.random(), y: Math.random() - 0.2 },
+          colors: ['#ff69b4', '#ff0000', '#00ff00', '#0000ff', '#ffff00']
+        });
+      }, 250);
+    });
+  </script>
+</body>
+</html>
